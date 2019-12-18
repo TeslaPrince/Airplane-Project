@@ -1,0 +1,13 @@
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+
+public static void ticket() throws IOException{
+string fileContent = "test";
+
+BufferedWriter writer = new BufferedWriter("c:/temp/"));
+writer.write(fileContent);
+writer.close();
+
+}
