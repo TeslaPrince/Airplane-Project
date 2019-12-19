@@ -8,8 +8,8 @@ public class Finalpro
     private static String[] states = new String[NUMBER_OF_FLIGHTS];
     private static float[] times = new float[NUMBER_OF_FLIGHTS]; 
     public static JFrame frame = new JFrame();
-    File userNames= new File ("Usernames.txt");
-    File passWords= new File ("PassWords.txt"); 
+    private static final String PATH2 = "Usernames.txt";
+    private static final String PATH3 = "Passwords.txt"; 
 
     public static void main(String[] args){
         boolean wrongInput= false;
@@ -28,7 +28,7 @@ public class Finalpro
                 switch(user_choice) {
                     case 1:
                     String logIn= JOptionPane.showInputDialog("Please input a valid username");
-
+                    
                     break;
                     case 2:
 
@@ -127,15 +127,28 @@ public class Finalpro
         //List<State> dista = new ArrayList<State>(s);
         //JOptionPane.showMessageDialog(frame, dist);
     }
-
+    public static void writeToFile(String path, String data){
+    try{
+        BufferedWriter writer = new BufferedWriter (new FileWriter(path, true));
+        writer.close();
+    }
+    catch(IOException e){
+        System.out.println(e);
+    }
+    }
     public static void fileWriter()throws Exception{
+        BufferedWriter bwu = null;
+        BufferedWriter bwp = null;
         String usernameC = JOptionPane.showInputDialog("Please Create a valid username");
-        FileWriter writer = new FileWriter(usernameC); 
-        writer.write(usernameC);
+        FileWriter writer = new FileWriter(usernameC);
+        bwu = new BufferedWriter(writer);
+        writeToFile(PATH2, usernameC);
+        // writer.write(usernameC);
         writer.flush();
         writer.close();
         String passwordC= JOptionPane.showInputDialog("Please Create A Passcode \nPlease Remember Not To Share These");
         FileWriter writer1 = new FileWriter(passwordC);
+        bwp = new BufferedWriter (writer1);
         writer.write(passwordC);
         writer.flush();
         writer.close();
