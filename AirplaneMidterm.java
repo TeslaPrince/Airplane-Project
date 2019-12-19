@@ -1,4 +1,4 @@
-//Jenna Lambert, William Eaton, Gabriel Peters, Cody Garthwaite, Nick Maretti, Do Guang
+//Jenna Lambert, William Eaton, Gabriel Peters, Cody Garthwaite, Nick Maretti, Quang Do
 //Created: 10-22-19 (JL)
 //Modified: 10-23-19 (JL)
 //Modified: 10-24-19 (JL)
