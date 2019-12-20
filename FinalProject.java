@@ -1,8 +1,4 @@
 //will 12/19/2019
-
-import javax.swing.*;
-import java.util.*;
-import java.io.*;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,18 +22,26 @@ public class FinalProject
     private static final String PATH ="SateFlightTimes.csv";//excel sheet
     private static final Ticket userTicket[] = new Ticket[1000];//max amount of ticketVariables
     // instance variables - replace the example below with your own
-    public static JFrame frame = new JFrame();
+
     private static final String[] STATES = new String[NUM_OF_STATES];
     private static final String[] FLIGHT_TIME = new String[NUM_OF_STATES];
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
+        int firstCount = 0;
+        int commCount = 0;
+        int wifiCount = 0;
+        int drinkCount = 0;
+        int foodCount = 0;
+        int boozeCount = 0;
+        int movieCount = 0;
         FirstClass firstC;//declaring first class object
-        Commercial comm;
-        JOptionPane.showMessageDialog(frame,"Welcome to American Airlines at O'Hare International Airport!");
-        int ticketNum = 1;
-        //JOptionPane.showInputDialog used  for formating questions easier
-        String strNumUserTickets = JOptionPane.showInputDialog("How many tickets you would like to purchase?");
-        //String userTicketNum = scanner.nextLine();
+        Commercial comm; // declare commercial Onject
+        System.out.println("\t\tWelcome to American Airlines at O'Hare International Airport!\n\n");
+        int ticketNum = 1; //base ticket number. will increase one after every loop
+
+        //uin used  for formating questions easier
+        String strNumUserTickets = uin("\tHow many tickets you would like to purchase?: ");
+        String userTicketNum = scanner.nextLine();
         int numUserTickets = tryStrToInt(strNumUserTickets);
         if(numUserTickets>30 || numUserTickets<1){
             numUserTickets = 1;
@@ -50,25 +54,25 @@ public class FinalProject
             userTicket[i].ticketNum = ticketNum;
             //User's First Name
 
-            userTicket[i].firstName = JOptionPane.showInputDialog("First Name:");
+            userTicket[i].firstName = uin("First Name: ");
             //User's Middle Initial
 
             do{
-                userTicket[i].middleInitial = JOptionPane.showInputDialog("Middle Initial(if no middle name press enter):");
+                userTicket[i].middleInitial = uin("Middle Initial(if no middle name press enter): ");
             }while(userTicket[i].middleInitial.length() > 1);
             //User's Last Name
-            userTicket[i].lastName = JOptionPane.showInputDialog("Last Name:");
+            userTicket[i].lastName = uin("Last Name: ");
             //User's Age
 
-            String strAge = JOptionPane.showInputDialog("Age:");
+            String strAge = uin("Age:");
             int age= tryStrToInt(strAge);
 
             userTicket[i].age = age;
 
-            userTicket[i].destinationCity = JOptionPane.showInputDialog("Destination City:");
+            userTicket[i].destinationCity = uin("Destination City: ");
             //User's Destination State
             /*
-            do{   userTicket[i].destinationState = JOptionPane.showInputDialog("Destination State(Valid 2-letter Postal Code):");
+            do{   userTicket[i].destinationState = uin("Destination State(Valid 2-letter Postal Code):");
             }while(userTicket[i].destinationState.length() > 2 ||
             !userTicket[i].destinationState.equalsIgnoreCase("AL") && // enums all possible states lab 14 or 11 provice enum to look at use Enum.vaule of parse enum value from state 5 lines
             !userTicket[i].destinationState.equalsIgnoreCase("AK") && 
@@ -123,72 +127,133 @@ public class FinalProject
             !userTicket[i].destinationState.equalsIgnoreCase("WY"));
              */
 
-            String whatClass = JOptionPane.showInputDialog("what class you like...\n\tFirst Class($1000):\tFirst\n\tCommercial(370):\tregular");
+            String whatClass = uin("what class you like...\n\tFirst Class($1000):\tFirst\n\tCommercial($370):\tregular\n");
             if(whatClass.equalsIgnoreCase("first")){
                 userTicket[i].classChoice="First Class";
-
-                String useWifi = JOptionPane.showInputDialog("\n if you would like wifi ong your flight\n($12): Yes Or No"); 
+                firstCount++;    
+                String useWifi = uin("if you would like wifi ong your flight($12): Yes Or No\n"); 
                 if(useWifi.equalsIgnoreCase("yes") || useWifi.equalsIgnoreCase("y")){
-                    useWifi = "Yes";
-                    userTicket[i].classChoice = useWifi;
+                    wifiCount++;
+                }
+                else if(useWifi.equalsIgnoreCase("no") || useWifi.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to use Wifi.\n");
 
                 }
-                if(useWifi.equalsIgnoreCase("no") || useWifi.equalsIgnoreCase("n")){
-                    useWifi="No";
-                    userTicket[i].classChoice = useWifi;
+                else{
+                    System.out.println("You chose not to use Wifi.\n");
+
                 }
-                String wantDrink = JOptionPane.showInputDialog(" if you would like refresments on your flight\n($6): Yes Or No");
+                String wantDrink = uin("if you would like refresments on your flight\n($6): Yes Or No\n");
                 if(wantDrink.equalsIgnoreCase("yes") || wantDrink.equalsIgnoreCase("y")){
-                    wantDrink = "Yes";
-                    userTicket[i].classChoice = wantDrink;
-
+                    drinkCount++;             
                 }
-                if(wantDrink.equalsIgnoreCase("no") || wantDrink.equalsIgnoreCase("n")){
-                    wantDrink = "No";
-                    userTicket[i].classChoice = wantDrink;
+                else if(wantDrink.equalsIgnoreCase("no") || wantDrink.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to have a beverage.\n");
+                }
+                else{
+                    System.out.println("You chose not to have a beverage.\n");
                 }
 
                 firstC = new  FirstClass(useWifi, wantDrink);
 
                 FirstClass firstClass = (FirstClass) firstC;
-
+                //  System.out.println(firstC.toString());
                 firstClass.firstClassMessage();
+
+                String wantBooze = uin("if you want access to alcohol on this flight($16): Yes or No\n");
+                if(wantBooze.equalsIgnoreCase("yes") || wantBooze.equalsIgnoreCase("y")){
+                    boozeCount++;             
+                }
+                else if(wantBooze.equalsIgnoreCase("no") || wantBooze.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to have alcohol.\n");
+                }
+                else{
+
+                    System.out.println("You chose not to have a beverage.\n");
+                }
+                String wantMovie = uin("if you want access to watch movies on this flight($25): Yes or No");
+                if(wantMovie.equalsIgnoreCase("yes") || wantMovie.equalsIgnoreCase("y")){
+                    movieCount++;             
+                }
+                else if(wantMovie.equalsIgnoreCase("no") || wantMovie.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to watch Movies.\n");
+                }
+                else{
+
+                    System.out.println("You chose not to watch Movies.\n");
+                }
+                String wantFood = uin("if you want food on this flight($15): Yes or No");
+                if(wantFood.equalsIgnoreCase("yes") || wantFood.equalsIgnoreCase("y")){
+                    foodCount++;             
+                }
+                else if(wantFood.equalsIgnoreCase("no") || wantFood.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to eat.\n");
+                }
+                else{
+
+                    System.out.println("You chose not to eat.\n");
+
+                }
             }//
             else if(whatClass.equalsIgnoreCase("regular")){
                 userTicket[i].classChoice =" Regular Class";
-
-                String useWifi = JOptionPane.showInputDialog("\n if you would like wifi ong your flight\n($12): Yes Or No"); 
+                commCount++;
+                String useWifi = uin("if you would like wifi ong your flight($12): Yes Or No\n"); 
                 if(useWifi.equalsIgnoreCase("yes") || useWifi.equalsIgnoreCase("y")){
-                    useWifi = "Yes";
-                    userTicket[i].classChoice = useWifi;
-
+                    wifiCount++;
                 }
-                if(useWifi.equalsIgnoreCase("no") || useWifi.equalsIgnoreCase("n")){
-                    useWifi="No";
-                    userTicket[i].classChoice = useWifi;
+                else if(useWifi.equalsIgnoreCase("no") || useWifi.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to use Wifi.\n\n");
                 }
-                String wantDrink = JOptionPane.showInputDialog(" if you would like refresments on your flight\n($6): Yes Or No");
+                else{
+                    System.out.println("You chose not to use Wifi.\n\n");
+                }
+                String wantDrink = uin("if you would like refresments on your flight($6): Yes Or No\n");
                 if(wantDrink.equalsIgnoreCase("yes") || wantDrink.equalsIgnoreCase("y")){
-                    wantDrink = "Yes";
-                    userTicket[i].classChoice = wantDrink;
-
+                    drinkCount++;
                 }
-                if(wantDrink.equalsIgnoreCase("no") || wantDrink.equalsIgnoreCase("n")){
-                    wantDrink = "No";
-                    userTicket[i].classChoice = wantDrink;
-                    
+                else if(wantDrink.equalsIgnoreCase("no") || wantDrink.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to have a beverage.\n");
+                }
+                else{
+                    System.out.println("You chose not to have a beverage.\n");
                 }
                 comm = new Commercial(useWifi,wantDrink);
                 Commercial  commersc = (Commercial) comm;
-                
-                commersc.regularClassMessage();
+                // System.out.println(comm.toString());//Prints the Commercial Object
+                commersc.regularClassMessage();//calls commercial 
             }
             else{
-                userTicket[i].classChoice = "Regular";
+                userTicket[i].classChoice =" Regular Class";
+                commCount++;
+                String useWifi = uin("if you would like wifi ong your flight\n($12): Yes Or No\n"); 
+                if(useWifi.equalsIgnoreCase("yes") || useWifi.equalsIgnoreCase("y")){
+                    wifiCount++;
+                }
+                else if(useWifi.equalsIgnoreCase("no") || useWifi.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to use Wifi.\n\n");
+                }
+                else{
+                    System.out.println("You chose not to use Wifi.\n\n");
+                }
+                String wantDrink = uin("if you would like refresments on your flight\n($6): Yes Or No\n");
+                if(wantDrink.equalsIgnoreCase("yes") || wantDrink.equalsIgnoreCase("y")){
+                    drinkCount++;
+                }
+                else if(wantDrink.equalsIgnoreCase("no") || wantDrink.equalsIgnoreCase("n")){
+                    System.out.println("You chose not to have a beverage.\n");
+                }
+                else{
+                    System.out.println("You chose not to have a beverage.\n");
+                }
+                comm = new Commercial(useWifi,wantDrink);
+                Commercial  commersc = (Commercial) comm;
+                // System.out.println(comm.toString());//Prints the Commercial Object
+                commersc.regularClassMessage();//calls commercial 
 
             }
 
-            JOptionPane.showInputDialog("\n\nIs the flight Military realated?(y/n)");
+            System.out.println("\n\nIs the flight Military realated?(y/n)");
             String strMilitary = scanner.nextLine();
             if(strMilitary.equalsIgnoreCase("y") || strMilitary.equalsIgnoreCase("yes")){
                 userTicket[i].military = "Yes";
@@ -200,7 +265,7 @@ public class FinalProject
                 userTicket[i].military = "No";
             }
             //Disablity
-            JOptionPane.showInputDialog("\nDo you have a physical disability?(y/n)");
+            System.out.println("\nDo you have a physical disability?(y/n)");
             String strDisability = scanner.nextLine();
             if(strDisability.equalsIgnoreCase("y") || strDisability.equalsIgnoreCase("yes")){
                 userTicket[i].disability = "Yes";
@@ -212,23 +277,21 @@ public class FinalProject
                 userTicket[i].disability = "No";
             }
 
-           printAll(userTicket[i].ticketNum , userTicket[i].lastName ,  userTicket[i].firstName , userTicket[i].middleInitial , userTicket[i].age , userTicket[i].destinationCity , userTicket[i].disability , userTicket[i].military);
+            printAll(userTicket[i].ticketNum, userTicket[i].lastName, userTicket[i].firstName, userTicket[i].middleInitial, userTicket[i].age, userTicket[i].destinationCity, userTicket[i].disability, userTicket[i].military);
             ticketNum++;
         }
 
-        
     }
-
     public static void printAll(int ticketNum, String lastName, String firstName, String middleInitial, int age, String destinationCity, String disability, String military ){
-        System.out.printf("================================================\nTicket Number: %d\nFull Name: %s, %s %s\nAge: %d\nDestination: %s, \nDisability: %s\nMilitary Service:%s\n", ticketNum, lastName, firstName, middleInitial, age, destinationCity, disability, military);
+        System.out.printf("================================================\nTicket Number: %d\nFull Name: %s, %s %s\nAge: %d\nDestination: %s, \nDisability: %s\nMilitary Service:%s\n\n\n\n", ticketNum, lastName, firstName, middleInitial, age, destinationCity, disability, military);
     }
 
-    // public static String JOptionPane.showInputDialog(String prompt){
-        // String JOptionPane.showInputDialog;
-        // System.out.printf("\tInput %s ", prompt);
-        // JOptionPane.showInputDialog = scanner.nextLine();
-        // return JOptionPane.showInputDialog;
-    // }
+    public static String uin(String prompt){
+        String uin;
+        System.out.printf("Input %s", prompt);
+        uin = scanner.nextLine();
+        return uin;
+    }
 
     public static int tryStrToInt(String strCin){
         int cin = 0;
